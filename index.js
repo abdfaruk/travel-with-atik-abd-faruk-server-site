@@ -26,11 +26,16 @@ async function run () {
             res.send(products);
         });
 
-        // app.get('/orders', async (req, res)=>{
-        //     const order = req.body;
-        //     console.log('order', order);
-        //     res.send('order processed');
-        // })
+        app.post('/orders', async (req, res)=>{
+            const order = req.body;
+            const result = await orderCollection.insertOne(req.body);
+            res.send(result);
+        });
+        
+        app.get('/myOrder', async(req, res)=>{
+            const cursor = await orderCollection.find({}).toArray();
+            res.send(cursor);
+        })
 
     }
     finally{
